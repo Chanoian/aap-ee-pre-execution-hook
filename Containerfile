@@ -8,4 +8,4 @@ COPY precheck.sh /usr/local/bin/validation/precheck.sh
 RUN chmod +x /usr/local/bin/validation/precheck.py \
     && chmod +x /usr/local/bin/validation/precheck.sh
 
-RUN sed -i '/exec \$SCRIPT -- "\${@}"/i /usr/local/bin/validation/precheck.sh "\$\@"' /bin/entrypoint
+RUN sed -i '/exec \$SCRIPT -- "\${@}"/i /usr/local/bin/validation/precheck.sh "\$\@"' /usr/bin/entrypoint
