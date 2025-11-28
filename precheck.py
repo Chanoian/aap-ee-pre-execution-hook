@@ -1,11 +1,5 @@
 import os
 
-print("Hello World !")
+file = os.listdir("/runner/env")
 
-path = "/runner/env"
-files = os.listdir(path)
-print(files)
-
-new_path = "/home/runner/env"
-new_files = os.listdir(new_path)
-print(new_files)
+print(file)
