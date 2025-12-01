@@ -1,0 +1,19 @@
+---
+version: 3
+images:
+  base_image:
+    name: registry.redhat.io/ansible-automation-platform-26/ee-supported-rhel9:latest
+dependencies:
+  ansible_core:
+    package_pip: ansible-core
+  ansible_runner:
+    package_pip: ansible-runner
+additional_build_steps:
+  prepend_base:
+    - RUN mkdir -p       /usr/local/bin/validation
+    - COPY ./precheck/precheck.py /usr/local/bin/validation/precheck.py
+    - COPY ./precheck/precheck.sh /usr/local/bin/validation/precheck.sh
+    - RUN chmod 755      /usr/local/bin/validation/precheck.sh
+    - RUN chmod 755      /usr/local/bin/validation/precheck.py
+  append_final:
+    - RUN sed -i '/exec "${@}"/i /usr/local/bin/validation/precheck.sh "${@}"' /opt/builder/bin/entrypoint
