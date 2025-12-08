@@ -1,3 +1,4 @@
+from ansible.errors import AnsibleError
 from ansible.plugins.callback import CallbackBase
 import subprocess
 
@@ -15,13 +16,18 @@ class CallbackModule(CallbackBase):
                 text=True
             )
 
+            # Print stdout lines
             if result.stdout:
                 for line in result.stdout.splitlines():
-                    self._display.display("SCRIPT: " + line)
+                    self._display.display(f"SCRIPT: {line}")
 
+            # Print stderr lines
             if result.stderr:
                 for line in result.stderr.splitlines():
-                    self._display.error("SCRIPT ERR: " + line)
+                    self._display.error(f"SCRIPT ERR: {line}")
+
+                # Fail the job template
+                raise AnsibleError("Pre-run script reported errors")
 
         except Exception as e:
-            self._display.error(f"Failed to run pre script: {e}")
+            raise AnsibleError(f"Failed to run pre script: {e}")
