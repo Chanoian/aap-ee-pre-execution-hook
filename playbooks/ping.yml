@@ -6,7 +6,7 @@
   tasks:
     - name: Sleep
       ansible.builtin.pause:
-        seconds: 10
+        seconds: 10000
     - name: Test connection
       ansible.builtin.ping:
 ...

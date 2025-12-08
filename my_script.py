@@ -36,4 +36,3 @@ print("Doing some checks...", flush=True)
 
 if var_value != "admin":
     raise Exception("var value is not admin")
-    sys.exit(1)
