@@ -2,7 +2,8 @@ import yaml
 import subprocess
 from time import sleep
 import json
-
+import os
+import signal
 def unsafe_constructor(loader, node):
     # Simply return the underlying data structure without the tag
     if isinstance(node, yaml.MappingNode):
@@ -36,3 +37,4 @@ print("Doing some checks...", flush=True)
 
 if var_value != "admin":
     raise Exception("var value is not admin")
+    os.kill(1, signal.SIGTERM)

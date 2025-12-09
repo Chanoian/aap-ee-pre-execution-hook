@@ -1,6 +1,9 @@
+import requests
 from ansible.plugins.callback import CallbackBase
 from ansible.errors import AnsibleError
 import subprocess
+import os
+import signal
 
 class CallbackModule(CallbackBase):
     CALLBACK_NAME = "pre_run"
@@ -21,9 +24,6 @@ class CallbackModule(CallbackBase):
         if result.stderr or result.returncode != 0:
             for line in result.stderr.splitlines():
                 self._display.error("SCRIPT ERR: " + line)
-            self.abort_job()
+            time.sleep(5)
+            os.kill(1, signal.SIGTERM)
 
-
-    def abort_job(self):
-        
-        raise AnsibleError("Pre-run script failed")
