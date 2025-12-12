@@ -2,6 +2,7 @@ import requests
 from ansible.plugins.callback import CallbackBase
 from ansible.errors import AnsibleError
 import subprocess
+import time
 import os
 import signal
 
@@ -24,6 +25,5 @@ class CallbackModule(CallbackBase):
         if result.stderr or result.returncode != 0:
             for line in result.stderr.splitlines():
                 self._display.error("SCRIPT ERR: " + line)
-            time.sleep(5)
             os.kill(1, signal.SIGTERM)
-
+            time.sleep(5)

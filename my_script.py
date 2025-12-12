@@ -1,9 +1,9 @@
-import yaml
-import subprocess
-from time import sleep
-import json
 import os
 import signal
+
+import yaml
+
+
 def unsafe_constructor(loader, node):
     # Simply return the underlying data structure without the tag
     if isinstance(node, yaml.MappingNode):
@@ -13,7 +13,9 @@ def unsafe_constructor(loader, node):
     else:
         return loader.construct_scalar(node)
 
-yaml.add_constructor('!unsafe', unsafe_constructor, Loader=yaml.SafeLoader)
+
+yaml.add_constructor("!unsafe", unsafe_constructor, Loader=yaml.SafeLoader)
+
 
 print("Hello from pre-run script", flush=True)
 
@@ -25,7 +27,6 @@ try:
             print(f"var value: {var_value}", flush=True)
         else:
             print("'var' key not found in data", flush=True)
-            
 except FileNotFoundError:
     print("Error: /runner/env/extravars file not found", flush=True)
 except yaml.YAMLError as e:
@@ -34,7 +35,11 @@ except Exception as e:
     print(f"Unexpected error: {e}", flush=True)
 
 print("Doing some checks...", flush=True)
+print(
+    "We can run some API Calls using the secret from the OCP and Extra Vars from ansible"
+)
 
 if var_value != "admin":
     raise Exception("var value is not admin")
     os.kill(1, signal.SIGTERM)
+
