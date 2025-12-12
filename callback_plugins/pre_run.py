@@ -27,3 +27,8 @@ class CallbackModule(CallbackBase):
                 self._display.error("SCRIPT ERR: " + line)
             os.kill(1, signal.SIGTERM)
             time.sleep(5)
+        
+        except Exception as e:
+            self._display.error(f"Failed to run pre script: {e}")
+            os.kill(1, signal.SIGTERM)
+            time.sleep(5)
